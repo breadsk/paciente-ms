@@ -27,11 +27,11 @@ public class PacienteService {
         return mapearADto(paciente);
     }
 
-    public List<PacienteResponseDTO> obtenerTodos(){
+    public List<PacienteResponseDTO> obtenerTodos() {
         List<Paciente> pacientes = pacienteRepository.findAll();
         return pacientes.stream()
-            .map(this::mapearADto)
-            .collect(Collectors.toList());
+                .map(this::mapearADto)
+                .collect(Collectors.toList());
     }
 
     // Método para guardar pacientes
@@ -40,32 +40,31 @@ public class PacienteService {
         return mapearADto(pacienteGuardado);
     }
 
-    //Metodo para actualizar pacientes
-    public PacienteResponseDTO actualizar(Long id,Paciente detallesPaciente){
-        //1.Verificamos que el paciente existe
+    // Metodo para actualizar pacientes
+    public PacienteResponseDTO actualizar(Long id, Paciente detallesPaciente) {
+        // 1.Verificamos que el paciente existe
         Paciente pacienteExistente = pacienteRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Paciente no encontrado con ese id: " + id));
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado con ese id: " + id));
 
-        //Actualizamos los datos permitidos
+        // Actualizamos los datos permitidos
         pacienteExistente.setNombre(detallesPaciente.getNombre());
         pacienteExistente.setDocumento(detallesPaciente.getDocumento());
         pacienteExistente.setFechaNacimiento(detallesPaciente.getFechaNacimiento());
 
-        //Guardamos y devolcemos como DTO
+        // Guardamos y devolcemos como DTO
         Paciente pacienteActualizado = pacienteRepository.save(pacienteExistente);
         return mapearADto(pacienteActualizado);
     }
 
-
-    //Metodo para eliminar
-    public void eliminar(Long id){
+    // Metodo para eliminar
+    public void eliminar(Long id) {
         Paciente paciente = pacienteRepository.findById(id)
-                    .orElseThrow(()-> new RuntimeException("No hay paciente con ese id: " + id));
+                .orElseThrow(() -> new RuntimeException("No hay paciente con ese id: " + id));
 
         pacienteRepository.delete(paciente);
     }
 
-    private PacienteResponseDTO mapearADto(Paciente paciente){
+    private PacienteResponseDTO mapearADto(Paciente paciente) {
         PacienteResponseDTO dto = new PacienteResponseDTO();
         dto.setId(paciente.getId());
         dto.setNombre(paciente.getNombre());

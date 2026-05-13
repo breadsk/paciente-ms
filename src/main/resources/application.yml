@@ -20,3 +20,6 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
+
+jwt:
+  secret: Duoc.1983Duoc.1983Duoc.1983Duoc.1983
